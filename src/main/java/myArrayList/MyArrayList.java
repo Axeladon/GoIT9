@@ -3,16 +3,16 @@ package myArrayList;
 import java.util.Arrays;
 
 public class MyArrayList<T> {
-    private Object[] array;
+    private T[] array;
     private static final int DEFAULT_CAPACITY = 10;
     private int size;
 
-    MyArrayList() {
-        array = new Object[DEFAULT_CAPACITY];
+    public MyArrayList() {
+        array = (T[]) new Object[DEFAULT_CAPACITY];
         size = 0;
     }
-    MyArrayList(int capacity) {
-        array = new Object[capacity];
+    public MyArrayList(int capacity) {
+        array = (T[]) new Object[capacity];
         size = 0;
     }
 
@@ -25,9 +25,7 @@ public class MyArrayList<T> {
     }
 
     public boolean remove(int index) {
-        if (index < 0 || index > size) {
-            return false;
-        }
+        checkIndex(index);
 
         for (int i = index; i < size - 1; i++) {
             array[i] = array[i + 1];
@@ -37,17 +35,23 @@ public class MyArrayList<T> {
     }
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            array[i] = null;
-            size = 0;
-        }
+        array = (T[]) new Object[DEFAULT_CAPACITY];
+        size = 0;
     }
 
     public int size() {
         return size;
     }
 
-    public Object get(int index) {
+    public T get(int index) {
+        checkIndex(index);
         return array[index];
     }
+
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
+    }
+
 }

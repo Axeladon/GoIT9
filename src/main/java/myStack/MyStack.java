@@ -22,6 +22,8 @@ public class MyStack<T> {
     }
 
     public void remove(int index) {
+        checkIndex(index);
+
         if (size == 1) {
             clear();
         } else {
@@ -96,5 +98,11 @@ public class MyStack<T> {
             return value;
         }
 
+    }
+
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
     }
 }

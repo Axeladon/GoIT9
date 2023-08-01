@@ -19,6 +19,8 @@ public class MyLinkedList<T> {
     }
 
     public void remove(int index) {
+        checkIndex(index);
+
         Node toRemove = firstNode;
         for (int i = 0; i < index; i++) {
             toRemove = toRemove.getNextNode();
@@ -37,12 +39,7 @@ public class MyLinkedList<T> {
     }
 
     public void clear() {
-        Node toClear = firstNode;
-        for (int i = 0; i < size; i++) {
-            firstNode = firstNode.getNextNode();
-            toClear.setPrevNode(null);
-            toClear.setNextNode(null);
-        }
+        firstNode = lastNode = null;
         size = 0;
     }
 
@@ -51,6 +48,7 @@ public class MyLinkedList<T> {
     }
 
     public T get(int index) {
+        checkIndex(index);
 
         Node curNode = firstNode;
         for (int i = 0; i < index; i++) {
@@ -91,6 +89,12 @@ public class MyLinkedList<T> {
 
         public void setValue(T value) {
             this.value = value;
+        }
+    }
+
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
     }
 }
