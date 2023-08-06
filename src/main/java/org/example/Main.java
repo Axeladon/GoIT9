@@ -27,11 +27,20 @@ public class Main {
     }
 
     public static void testMyHashMap(){
-        MyHashMap hashMap = new MyHashMap();
+        MyHashMap<Integer, Integer> hashMap = new MyHashMap();
+
+        //check put, get and remove null-key
+        hashMap.put(null, 20);
+        System.out.println("hashMap.get(null) = " + hashMap.get(null));
+        hashMap.remove(null);
+        System.out.println("hashMap.get(null) = " + hashMap.get(null));
+
+
         for (int i = 0; i < 1_000_000; i++) {
             hashMap.put(i, i);
             if (i == 500_000) {
                 hashMap.clear();
+                hashMap.put(null, i);
             }
         }
         System.out.println("hashMap.size() = " + hashMap.size());
@@ -40,7 +49,7 @@ public class Main {
         hashMap.remove(500_002);
         System.out.println("hashMap.size() = " + hashMap.size());
         System.out.println("hashMap.get(500_005) = " + hashMap.get(500_005));
-        System.out.println("hashMap.get(499_999) = " + hashMap.get(499_999));
+        System.out.println("hashMap.get(500_000) = " + hashMap.get(500_000));
     }
 
     public static void testMyLinkedList() {
@@ -65,15 +74,15 @@ public class Main {
                 myQueue.clear();
             }
         }
-        System.out.println("myLinkedList.size() = " + myQueue.size());
+        System.out.println("myQueue.size() = " + myQueue.size());
         System.out.println("myQueue.peek() = " + myQueue.peek());
         System.out.println("myQueue.peek() = " + myQueue.peek());
         System.out.println("myQueue.peek() = " + myQueue.peek());
-        System.out.println("myLinkedList.size() = " + myQueue.size());
+        System.out.println("myQueue.size() = " + myQueue.size());
         System.out.println("myQueue.poll() = " + myQueue.poll());
         System.out.println("myQueue.poll() = " + myQueue.poll());
         System.out.println("myQueue.poll() = " + myQueue.poll());
-        System.out.println("myLinkedList.size() = " + myQueue.size());
+        System.out.println("myQueue.size() = " + myQueue.size());
     }
 
     public static void testMyStack() {
@@ -97,10 +106,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        //testMyArrayList();
+        testMyArrayList();
         //testMyHashMap();
         //testMyLinkedList();
-        testMyQueue();
+        //testMyQueue();
     }
 
 }

@@ -32,14 +32,15 @@ public class MyHashMap<K, V> {
     }
 
     public void put(K key, V value) {
-        if (key == null)
-            throw new IllegalArgumentException("Null key is not allowed.");
+        int index = 0;
+        if (key != null) {
+            index = key.hashCode() % buckets.length;
+        }
 
-        int index = key.hashCode() % buckets.length;
         Entry<K, V> entry = buckets[index];
 
         while (entry != null) {
-            if (entry.key.equals(key)) {
+            if (key != null && entry.key.equals(key)) {
                 entry.value = value;
                 return;
             }
@@ -49,7 +50,6 @@ public class MyHashMap<K, V> {
         if (size >= buckets.length * LOAD_FACTOR)
             resizeTable();
 
-        index = key.hashCode() % buckets.length;
         Entry<K, V> newEntry = new Entry<>(key, value);
         newEntry.next = buckets[index];
         buckets[index] = newEntry;
@@ -57,6 +57,14 @@ public class MyHashMap<K, V> {
     }
 
     public void remove(K key) {
+        if (key == null) {
+            if (buckets[0] != null) {
+                buckets[0] = buckets[0].next;
+                size--;
+            }
+            return;
+        }
+
         int hash = key.hashCode();
         int index = hash % buckets.length;
         Entry current = buckets[index];
@@ -85,8 +93,13 @@ public class MyHashMap<K, V> {
     }
     public V get(K key) {
         if (key == null) {
-            return null;
+            if (buckets[0] != null) {
+                return (V) buckets[0].value;
+            } else {
+                return null;
+            }
         }
+
         int hash = key.hashCode();
         int index = hash % buckets.length;
         Entry current = buckets[index];
